@@ -1,6 +1,6 @@
 # 🌱️ AgroToken
 
-A platform for tokenization and trading of crops and livestock.
+A platform for tokenization of crops and livestock to attract investments
 
 ## 🔗 Artifacts
 
