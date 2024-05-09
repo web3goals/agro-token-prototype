@@ -85,6 +85,7 @@ export function TokenCard(props: {
         tokenMetadata={tokenMetadata}
         tokenOwner={tokenOwner}
         tokenInvestmentAmount={tokenParams.investmentAmount.toString()}
+        tokenInvestmentToken={tokenParams.investmentToken}
         tokenInvestmentTokenSymbol={tokenInvestmentTokenSymbol}
         tokenInvestor={tokenParams.investor}
         tokenReturnDate={tokenParams.returnDate.toString()}

@@ -7,12 +7,14 @@ import { formatEther, isAddressEqual, zeroAddress } from "viem";
 import { useAccount } from "wagmi";
 import { TokenReturnInvestmentDialog } from "./token-return-investment-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { TokenInvestDialog } from "./token-invest-dialog";
 
 export function TokenCardHeader(props: {
   token: string;
   tokenMetadata: AgroTokenMetadata;
   tokenOwner: `0x${string}`;
   tokenInvestmentAmount: string;
+  tokenInvestmentToken: `0x${string}`;
   tokenInvestmentTokenSymbol: string;
   tokenInvestor: `0x${string}`;
   tokenReturnDate: string;
@@ -24,6 +26,10 @@ export function TokenCardHeader(props: {
   const isReturnButtonVisible =
     props.tokenReturnDate === "0" &&
     isAddressEqual(props.tokenOwner, address || zeroAddress);
+
+  const isInvestButtonVisible =
+    isAddressEqual(props.tokenInvestor, zeroAddress) &&
+    !isAddressEqual(props.tokenOwner, address || zeroAddress);
 
   return (
     <div className="w-full flex flex-row gap-4">
@@ -133,6 +139,16 @@ export function TokenCardHeader(props: {
             tokenInvestmentTokenSymbol={props.tokenInvestmentTokenSymbol}
             contracts={props.contracts}
             onReturn={() => props.onUpdate()}
+          />
+        )}
+        {isInvestButtonVisible && (
+          <TokenInvestDialog
+            token={props.token}
+            tokenInvestmentAmount={props.tokenInvestmentAmount}
+            tokenInvestmentToken={props.tokenInvestmentToken}
+            tokenInvestmentTokenSymbol={props.tokenInvestmentTokenSymbol}
+            contracts={props.contracts}
+            onInvest={() => props.onUpdate()}
           />
         )}
       </div>
