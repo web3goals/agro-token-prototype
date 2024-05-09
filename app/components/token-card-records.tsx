@@ -1,65 +1,27 @@
-import { SiteConfigContracts } from "@/config/site";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { agroTokenAbi } from "@/contracts/abi/agroToken";
-import useMetadataLoader from "@/hooks/useMetadataLoader";
-import { AgroTokenMetadata } from "@/types/agro-token-metadata";
-import { useReadContract } from "wagmi";
-import { Skeleton } from "./ui/skeleton";
-import { TokenAddRecordDialog } from "./token-add-record-dialog";
-import EntityList from "./entity-list";
-import { erc20Abi, zeroAddress } from "viem";
+"use client";
 
-// TODO: Implement
+import { SiteConfigContracts } from "@/config/site";
+import { AgroTokenMetadata } from "@/types/agro-token-metadata";
+import EntityList from "./entity-list";
+import { TokenAddRecordDialog } from "./token-add-record-dialog";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { useAccount } from "wagmi";
+import { isAddressEqual, zeroAddress } from "viem";
+
 export function TokenCardRecords(props: {
   token: string;
+  tokenMetadata: AgroTokenMetadata;
+  tokenOwner: `0x${string}`;
+  tokenInvestmentTokenSymbol: string;
+  tokenReturnDate: string;
   contracts: SiteConfigContracts;
-  addRecordActionVisible?: boolean;
+  onUpdate: () => {};
 }) {
-  /**
-   * Define token data
-   */
-  const { data: tokenParams, isFetched: isTokenParamsFetched } =
-    useReadContract({
-      address: props.contracts.agroToken,
-      abi: agroTokenAbi,
-      functionName: "getParams",
-      args: [BigInt(props.token)],
-      chainId: props.contracts.chain.id,
-    });
-  const {
-    data: tokenMetadataUri,
-    isFetched: isTokenMetadataUriFetched,
-    refetch: refetchTokenMetadataUri,
-  } = useReadContract({
-    address: props.contracts.agroToken,
-    abi: agroTokenAbi,
-    functionName: "tokenURI",
-    args: [BigInt(props.token)],
-    chainId: props.contracts.chain.id,
-  });
-  const { data: tokenMetadata, isLoaded: isTokenMetadataLoaded } =
-    useMetadataLoader<AgroTokenMetadata>(tokenMetadataUri);
+  const { address } = useAccount();
 
-  /**
-   * Define investment token symbol
-   */
-  const {
-    data: tokenInvestmentTokenSymbol,
-    isFetched: isTokenInvestmentTokenSymbol,
-  } = useReadContract({
-    address: tokenParams?.investmentToken || zeroAddress,
-    abi: erc20Abi,
-    functionName: "symbol",
-  });
-
-  if (
-    !isTokenParamsFetched ||
-    !isTokenMetadataUriFetched ||
-    !isTokenMetadataLoaded ||
-    !isTokenInvestmentTokenSymbol
-  ) {
-    return <Skeleton className="w-full h-8" />;
-  }
+  const isAddRecordButtonVisible =
+    props.tokenReturnDate === "0" &&
+    isAddressEqual(props.tokenOwner, address || zeroAddress);
 
   return (
     <div className="w-full flex flex-row gap-4">
@@ -74,24 +36,23 @@ export function TokenCardRecords(props: {
       <div className="w-full flex flex-col gap-4">
         <p className="text-lg font-bold">Records</p>
         <EntityList
-          entities={tokenMetadata?.records}
+          entities={props.tokenMetadata?.records}
           renderEntityCard={(record, index) => (
             <TokenCardRecord
               key={index}
               record={record}
-              tokenMetadata={tokenMetadata}
-              tokenInvestmentTokenSymbol={tokenInvestmentTokenSymbol}
+              tokenMetadata={props.tokenMetadata}
+              tokenInvestmentTokenSymbol={props.tokenInvestmentTokenSymbol}
             />
           )}
           noEntitiesText="No records 😐"
         />
-        {/* TODO: Define by token params and connected address */}
-        {props.addRecordActionVisible && tokenMetadata && (
+        {isAddRecordButtonVisible && (
           <TokenAddRecordDialog
             token={props.token}
-            tokenMetadata={tokenMetadata}
+            tokenMetadata={props.tokenMetadata}
             contracts={props.contracts}
-            onAdd={() => refetchTokenMetadataUri()}
+            onAdd={() => props.onUpdate()}
           />
         )}
       </div>

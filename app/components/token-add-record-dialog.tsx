@@ -124,6 +124,7 @@ export function TokenAddRecordDialog(props: {
                   <FormControl>
                     <Input
                       placeholder="Any value (for example, weight in kilograms)..."
+                      disabled={isFormSubmitting}
                       {...field}
                     />
                   </FormControl>
