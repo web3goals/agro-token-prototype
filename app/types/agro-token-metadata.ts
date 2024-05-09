@@ -5,4 +5,5 @@ export type AgroTokenMetadata = {
   identifier: string | undefined;
   expectedReturnAmount: string | undefined;
   expectedReturnPeriod: string | undefined;
+  records: { date: number; value: string }[] | undefined;
 };

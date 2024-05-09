@@ -117,10 +117,11 @@ export function FarmNewTokenForm() {
           String(values.expectedReturnAmount)
         ).toString(),
         expectedReturnPeriod: values.expectedReturnPeriod,
+        records: [],
       };
       const metadataUri = await uploadJsonToIpfs(metadata);
 
-      // Send request to create a product
+      // Send request to create a token
       if (contracts.accountAbstractionSuported) {
         // TODO: Implement
       } else {
