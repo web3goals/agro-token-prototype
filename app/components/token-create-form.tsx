@@ -34,7 +34,7 @@ import {
 import { Textarea } from "./ui/textarea";
 import { toast } from "./ui/use-toast";
 
-export function FarmNewTokenForm() {
+export function TokenCreateForm() {
   const { handleError } = useError();
   const publicClient = usePublicClient();
   const { data: walletClient } = useWalletClient();

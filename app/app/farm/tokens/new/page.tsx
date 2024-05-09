@@ -1,4 +1,4 @@
-import { FarmNewTokenForm } from "@/components/farm-new-token-form";
+import { TokenCreateForm } from "@/components/token-create-form";
 import { Separator } from "@/components/ui/separator";
 
 export default function NewTokenPage() {
@@ -11,7 +11,7 @@ export default function NewTokenPage() {
         </p>
       </div>
       <Separator className="my-6" />
-      <FarmNewTokenForm />
+      <TokenCreateForm />
     </div>
   );
 }
