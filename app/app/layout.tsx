@@ -16,7 +16,7 @@ export const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
-  title: siteConfig.name,
+  title: `${siteConfig.name} — ${siteConfig.description}`,
   description: siteConfig.description,
   icons: {
     icon: "/favicon.ico",
