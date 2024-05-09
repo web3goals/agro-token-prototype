@@ -5,8 +5,8 @@ export type SiteConfig = typeof siteConfig;
 
 export type SiteConfigContracts = {
   chain: Chain;
-  agrotoken: `0x${string}`;
-  usdtoken: `0x${string}`;
+  agroToken: `0x${string}`;
+  usdToken: `0x${string}`;
   entryPoint: `0x${string}`;
   paymaster: `0x${string}`;
   accountFactory: `0x${string}`;
@@ -23,8 +23,8 @@ export const siteConfig = {
   contracts: {
     raspberryTestnet: {
       chain: raspberryTestnet,
-      agrotoken: "0x0000000000000000000000000000000000000000" as `0x${string}`,
-      usdtoken: "0x0000000000000000000000000000000000000000" as `0x${string}`,
+      agroToken: "0x0000000000000000000000000000000000000000" as `0x${string}`,
+      usdToken: "0x0000000000000000000000000000000000000000" as `0x${string}`,
       entryPoint: "0x0000000000000000000000000000000000000000" as `0x${string}`,
       paymaster: "0x0000000000000000000000000000000000000000" as `0x${string}`,
       accountFactory:
