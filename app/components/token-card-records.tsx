@@ -15,7 +15,7 @@ export function TokenCardRecords(props: {
   tokenInvestmentTokenSymbol: string;
   tokenReturnDate: string;
   contracts: SiteConfigContracts;
-  onUpdate: () => {};
+  onUpdate: () => void;
 }) {
   const { address } = useAccount();
 

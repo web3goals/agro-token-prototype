@@ -20,15 +20,12 @@ import {
 import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
 import { useToast } from "./ui/use-toast";
-import { AgroTokenMetadata } from "@/types/agro-token-metadata";
-import { uploadJsonToIpfs } from "@/lib/ipfs";
-import { agroTokenAbi } from "@/contracts/abi/agroToken";
 
-export function TokenAddRecordDialog(props: {
+export function TokenReturnInvestmentDialog(props: {
   token: string;
-  tokenMetadata: AgroTokenMetadata;
+  tokenInvestmentTokenSymbol: string;
   contracts: SiteConfigContracts;
-  onAdd?: () => void;
+  onReturn?: () => void;
 }) {
   const { handleError } = useError();
   const publicClient = usePublicClient();
@@ -39,13 +36,13 @@ export function TokenAddRecordDialog(props: {
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
 
   const formSchema = z.object({
-    value: z.string().min(1),
+    value: z.coerce.number().gt(0),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      value: "",
+      value: 0,
     },
   });
 
@@ -62,35 +59,18 @@ export function TokenAddRecordDialog(props: {
         throw new Error("Wallet is not connected");
       }
 
-      // Upload metadata to IPFS
-      const metadata = structuredClone(props.tokenMetadata);
-      metadata.records = [
-        ...(props.tokenMetadata.records || []),
-        { date: new Date().getTime(), value: values.value },
-      ];
-      const metadataUri = await uploadJsonToIpfs(metadata);
-
-      // Send request to update the token
+      // Send request to return investment
       if (props.contracts.accountAbstractionSuported) {
         // TODO: Implement
       } else {
-        const txHash = await walletClient.writeContract({
-          address: props.contracts.agroToken,
-          abi: agroTokenAbi,
-          functionName: "setURI",
-          args: [BigInt(props.token), metadataUri],
-          chain: props.contracts.chain,
-        });
-        await publicClient.waitForTransactionReceipt({
-          hash: txHash as `0x${string}`,
-        });
+        // TODO: Implement
       }
 
       // Show success message
       toast({
-        title: "Record added 👌",
+        title: "Investment returned 👌",
       });
-      props.onAdd?.();
+      props.onReturn?.();
       form.reset();
       setIsOpen(false);
     } catch (error: any) {
@@ -103,13 +83,13 @@ export function TokenAddRecordDialog(props: {
   return (
     <Dialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm">
-          Add Record
+        <Button variant="secondary" size="sm">
+          Return Investment
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>Add a record</DialogTitle>
+          <DialogTitle>Return investment</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form
@@ -123,7 +103,8 @@ export function TokenAddRecordDialog(props: {
                 <FormItem>
                   <FormControl>
                     <Input
-                      placeholder="Any value (for example, weight in kilograms)..."
+                      placeholder={`Number of ${props.tokenInvestmentTokenSymbol} you want to return...`}
+                      type="number"
                       disabled={isFormSubmitting}
                       {...field}
                     />

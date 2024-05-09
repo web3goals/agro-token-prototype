@@ -27,14 +27,17 @@ export function TokenCard(props: {
     args: [BigInt(props.token)],
     chainId: props.contracts.chain.id,
   });
-  const { data: tokenParams, isFetched: isTokenParamsFetched } =
-    useReadContract({
-      address: props.contracts.agroToken,
-      abi: agroTokenAbi,
-      functionName: "getParams",
-      args: [BigInt(props.token)],
-      chainId: props.contracts.chain.id,
-    });
+  const {
+    data: tokenParams,
+    isFetched: isTokenParamsFetched,
+    refetch: refetchTokenParams,
+  } = useReadContract({
+    address: props.contracts.agroToken,
+    abi: agroTokenAbi,
+    functionName: "getParams",
+    args: [BigInt(props.token)],
+    chainId: props.contracts.chain.id,
+  });
   const {
     data: tokenMetadataUri,
     isFetched: isTokenMetadataUriFetched,
@@ -86,6 +89,10 @@ export function TokenCard(props: {
         tokenInvestor={tokenParams.investor}
         tokenReturnDate={tokenParams.returnDate.toString()}
         contracts={props.contracts}
+        onUpdate={() => {
+          refetchTokenParams();
+          refetchTokenMetadataUri();
+        }}
       />
       <Separator className="my-6" />
       <TokenCardRecords
@@ -95,7 +102,10 @@ export function TokenCard(props: {
         tokenInvestmentTokenSymbol={tokenInvestmentTokenSymbol}
         tokenReturnDate={tokenParams.returnDate.toString()}
         contracts={props.contracts}
-        onUpdate={() => refetchTokenMetadataUri()}
+        onUpdate={() => {
+          refetchTokenParams();
+          refetchTokenMetadataUri();
+        }}
       />
     </div>
   );

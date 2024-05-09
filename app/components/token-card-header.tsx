@@ -5,8 +5,8 @@ import { addressToShortAddress } from "@/lib/converters";
 import { AgroTokenMetadata } from "@/types/agro-token-metadata";
 import { formatEther, isAddressEqual, zeroAddress } from "viem";
 import { useAccount } from "wagmi";
+import { TokenReturnInvestmentDialog } from "./token-return-investment-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { Button } from "./ui/button";
 
 export function TokenCardHeader(props: {
   token: string;
@@ -17,6 +17,7 @@ export function TokenCardHeader(props: {
   tokenInvestor: `0x${string}`;
   tokenReturnDate: string;
   contracts: SiteConfigContracts;
+  onUpdate: () => void;
 }) {
   const { address } = useAccount();
 
@@ -126,7 +127,14 @@ export function TokenCardHeader(props: {
             </p>
           </div>
         </div>
-        {isReturnButtonVisible && <Button variant="secondary">Return</Button>}
+        {isReturnButtonVisible && (
+          <TokenReturnInvestmentDialog
+            token={props.token}
+            tokenInvestmentTokenSymbol={props.tokenInvestmentTokenSymbol}
+            contracts={props.contracts}
+            onReturn={() => props.onUpdate()}
+          />
+        )}
       </div>
     </div>
   );
