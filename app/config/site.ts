@@ -16,7 +16,8 @@ export type SiteConfigContracts = {
 export const siteConfig = {
   emoji: "🌱",
   name: "AgroToken",
-  description: "A platform for tokenization and trading of crops and livestock",
+  description:
+    "A platform for tokenization of crops and livestock to attract investments",
   links: {
     github: "https://github.com/web3goals/agro-token-prototype",
   },

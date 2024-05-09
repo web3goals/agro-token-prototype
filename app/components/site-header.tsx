@@ -22,14 +22,12 @@ export function SiteHeader() {
         </div>
         <div className="flex flex-1 items-center justify-end space-x-8">
           <SiteHeaderConnectButton />
-          {address && (
-            <Link
-              href={`/market`}
-              className="hidden md:block text-sm font-medium text-muted-foreground"
-            >
-              Market
-            </Link>
-          )}
+          <Link
+            href={`/explore`}
+            className="hidden md:block text-sm font-medium text-muted-foreground"
+          >
+            Explore
+          </Link>
           {address && (
             <Link
               href={`/farm`}
@@ -40,10 +38,10 @@ export function SiteHeader() {
           )}
           {address && (
             <Link
-              href={`/purchases`}
+              href={`/investments`}
               className="hidden md:block text-sm font-medium text-muted-foreground"
             >
-              My Purchases
+              My Investments
             </Link>
           )}
           <Link
