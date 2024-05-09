@@ -1,6 +1,7 @@
-import { FarmTokenList } from "@/components/farm-token-list";
+import { TokenFarmList } from "@/components/token-farm-list";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { siteConfig } from "@/config/site";
 import Link from "next/link";
 
 export default function FarmPage() {
@@ -17,7 +18,11 @@ export default function FarmPage() {
         <Link href="/farm/tokens/new">
           <Button>Create Token</Button>
         </Link>
-        <FarmTokenList />
+        <div className="w-full flex flex-col gap-6">
+          {Object.values(siteConfig.contracts).map((contracts, index) => (
+            <TokenFarmList key={index} contracts={contracts} />
+          ))}
+        </div>
       </div>
     </div>
   );

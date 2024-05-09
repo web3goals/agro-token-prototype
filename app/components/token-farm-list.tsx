@@ -1,6 +1,6 @@
 "use client";
 
-import { SiteConfigContracts, siteConfig } from "@/config/site";
+import { SiteConfigContracts } from "@/config/site";
 import { agroTokenAbi } from "@/contracts/abi/agroToken";
 import { useEffect, useState } from "react";
 import { isAddressEqual, zeroAddress } from "viem";
@@ -10,17 +10,7 @@ import { TokenCard } from "./token-card";
 
 const LIMIT = 42;
 
-export function FarmTokenList() {
-  return (
-    <div className="w-full flex flex-col gap-6">
-      {Object.values(siteConfig.contracts).map((contracts, index) => (
-        <FarmTokenListForContracts key={index} contracts={contracts} />
-      ))}
-    </div>
-  );
-}
-
-function FarmTokenListForContracts(props: { contracts: SiteConfigContracts }) {
+export function TokenFarmList(props: { contracts: SiteConfigContracts }) {
   const { address } = useAccount();
   const [smartAccountAddress, setSmartAccountAddress] = useState<
     `0x${string}` | undefined
@@ -28,7 +18,7 @@ function FarmTokenListForContracts(props: { contracts: SiteConfigContracts }) {
   const [tokens, setTokens] = useState<string[] | undefined>();
 
   const { data } = useInfiniteReadContracts({
-    cacheKey: `farm_token_list_${props.contracts.chain.id.toString()}`,
+    cacheKey: `token_farm_list_${props.contracts.chain.id.toString()}`,
     contracts(pageParam) {
       return [...new Array(LIMIT)].map(
         (_, i) =>
