@@ -50,7 +50,24 @@ export function TokenCardHeader(props: {
       </div>
       {/* Content */}
       <div className="w-full flex flex-col gap-4">
-        <p className="text-xl font-bold">{props.tokenMetadata.category}</p>
+        {/* Category and Status */}
+        <p className="text-xl font-bold">
+          {props.tokenMetadata.category}
+          {isAddressEqual(props.tokenInvestor, zeroAddress) && (
+            <span className="font-normal text-primary"> — Available</span>
+          )}
+          {!isAddressEqual(props.tokenInvestor, zeroAddress) &&
+            props.tokenReturnDate === "0" && (
+              <span className="font-normal text-destructive"> — Invested</span>
+            )}
+          {!isAddressEqual(props.tokenInvestor, zeroAddress) &&
+            props.tokenReturnDate !== "0" && (
+              <span className="font-normal text-muted-foreground">
+                {" "}
+                — Closed
+              </span>
+            )}
+        </p>
         <div className="flex flex-col gap-3">
           {/* Description */}
           <div className="flex flex-col gap-1 md:flex-row md:gap-3">
