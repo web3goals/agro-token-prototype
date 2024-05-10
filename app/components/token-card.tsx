@@ -60,6 +60,7 @@ export function TokenCard(props: {
     address: tokenParams?.investmentToken || zeroAddress,
     abi: erc20Abi,
     functionName: "symbol",
+    chainId: props.contracts.chain.id,
   });
 
   if (
