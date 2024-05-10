@@ -169,15 +169,9 @@ export function TokenCreateForm() {
                 </FormControl>
                 <SelectContent>
                   <SelectItem value="Cattle">🐂 Cattle</SelectItem>
-                  <SelectItem value="Grains" disabled>
-                    🌾 Grains
-                  </SelectItem>
-                  <SelectItem value="Poultry" disabled>
-                    🐔 Poultry
-                  </SelectItem>
-                  <SelectItem value="Coffee" disabled>
-                    ☕ Coffee
-                  </SelectItem>
+                  <SelectItem value="Grains">🌾 Grains</SelectItem>
+                  <SelectItem value="Poultry">🐔 Poultry</SelectItem>
+                  <SelectItem value="Coffee">☕ Coffee</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -322,9 +316,9 @@ export function TokenCreateForm() {
                 </FormControl>
                 <SelectContent>
                   <SelectItem value="1m">1 month</SelectItem>
-                  <SelectItem value="2m">2 months</SelectItem>
                   <SelectItem value="3m">3 months</SelectItem>
-                  <SelectItem value="4m">4 months</SelectItem>
+                  <SelectItem value="6m">6 months</SelectItem>
+                  <SelectItem value="1y">1 year</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />

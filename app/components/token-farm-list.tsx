@@ -72,7 +72,7 @@ export function TokenFarmList(props: { contracts: SiteConfigContracts }) {
 
   return (
     <EntityList
-      entities={tokens}
+      entities={tokens?.toReversed()}
       renderEntityCard={(token, index) => (
         <TokenCard key={index} token={token} contracts={props.contracts} />
       )}

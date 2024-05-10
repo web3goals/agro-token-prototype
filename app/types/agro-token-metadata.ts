@@ -1,6 +1,6 @@
 export type AgroTokenMetadata = {
   created: number | undefined;
-  category: "Cattle" | string | undefined;
+  category: string | undefined;
   description: string | undefined;
   identifier: string | undefined;
   expectedReturnAmount: string | undefined;

@@ -75,7 +75,7 @@ export function TokenInvestmentsList(props: {
 
   return (
     <EntityList
-      entities={tokens}
+      entities={tokens?.toReversed()}
       renderEntityCard={(token, index) => (
         <TokenCard key={index} token={token} contracts={props.contracts} />
       )}

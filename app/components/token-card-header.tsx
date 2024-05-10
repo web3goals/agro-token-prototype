@@ -44,7 +44,15 @@ export function TokenCardHeader(props: {
         <Avatar className="size-14">
           <AvatarImage src="" alt="Icon" />
           <AvatarFallback className="text-2xl bg-primary">
-            {props.tokenMetadata.category === "Cattle" ? "🐂" : "🪙"}
+            {props.tokenMetadata.category === "Cattle"
+              ? "🐂"
+              : props.tokenMetadata.category === "Grains"
+              ? "🌾"
+              : props.tokenMetadata.category === "Poultry"
+              ? "🐔"
+              : props.tokenMetadata.category === "Coffee"
+              ? "☕"
+              : "⭐"}
           </AvatarFallback>
         </Avatar>
       </div>
@@ -90,7 +98,7 @@ export function TokenCardHeader(props: {
           </div>
           {/* Creator */}
           <div className="flex flex-col gap-1 md:flex-row md:gap-3">
-            <p className="text-sm text-muted-foreground">Creator:</p>
+            <p className="text-sm text-muted-foreground">Farmer:</p>
             <p className="text-sm break-all">
               <a
                 href={`${props.contracts.chain.blockExplorers?.default?.url}/address/${props.tokenOwner}`}
@@ -133,9 +141,9 @@ export function TokenCardHeader(props: {
             </p>
             <p className="text-sm break-all">
               {props.tokenMetadata.expectedReturnPeriod === "1m" && "1 month"}
-              {props.tokenMetadata.expectedReturnPeriod === "2m" && "2 months"}
               {props.tokenMetadata.expectedReturnPeriod === "3m" && "3 months"}
-              {props.tokenMetadata.expectedReturnPeriod === "4m" && "4 months"}
+              {props.tokenMetadata.expectedReturnPeriod === "6m" && "4 months"}
+              {props.tokenMetadata.expectedReturnPeriod === "1y" && "1 year"}
             </p>
           </div>
           {/* Investor */}

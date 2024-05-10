@@ -128,7 +128,7 @@ export function TokenAddRecordDialog(props: {
               name="value"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Any value (e.g. weight in kg)</FormLabel>
+                  <FormLabel>Any value (e.g. weight or crop in kg)</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="5"
