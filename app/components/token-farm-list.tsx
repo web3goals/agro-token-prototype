@@ -54,11 +54,14 @@ export function TokenFarmList(props: { contracts: SiteConfigContracts }) {
     setTokens(undefined);
     if (address && data && smartAccountAddress) {
       const tokens: string[] = [];
-      const owners = (data as any).pages[0];
-      for (let i = 0; i < owners.length; i++) {
-        const element = owners[i];
+      const dataFirstPage = (data as any).pages[0];
+      for (let i = 0; i < dataFirstPage.length; i++) {
+        const dataPageElement = dataFirstPage[i];
         if (
-          isAddressEqual(element.result || zeroAddress, smartAccountAddress)
+          isAddressEqual(
+            dataPageElement.result || zeroAddress,
+            smartAccountAddress
+          )
         ) {
           tokens.push(String(i));
         }
