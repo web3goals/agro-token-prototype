@@ -1,4 +1,4 @@
-import { Chain, modeTestnet } from "viem/chains";
+import { Chain } from "viem/chains";
 import { raspberryTestnet } from "./chains";
 
 export type SiteConfig = typeof siteConfig;
