@@ -19,6 +19,10 @@ const config: HardhatUserConfig = {
       url: "https://rpc.opcelestia-raspberry.gelato.digital",
       accounts: [process.env.PRIVATE_KEY as string],
     },
+    modeTestnet: {
+      url: "https://sepolia.mode.network",
+      accounts: [process.env.PRIVATE_KEY as string],
+    },
   },
 };
 
