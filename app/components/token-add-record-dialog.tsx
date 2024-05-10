@@ -17,7 +17,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "./ui/form";
 import { Input } from "./ui/input";
 import { useToast } from "./ui/use-toast";
 import { AgroTokenMetadata } from "@/types/agro-token-metadata";
@@ -121,9 +128,10 @@ export function TokenAddRecordDialog(props: {
               name="value"
               render={({ field }) => (
                 <FormItem>
+                  <FormLabel>Any value (e.g. weight in kg)</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Any value (for example, weight in kilograms)..."
+                      placeholder="5"
                       disabled={isFormSubmitting}
                       {...field}
                     />
