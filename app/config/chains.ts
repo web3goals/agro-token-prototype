@@ -15,3 +15,19 @@ export const raspberryTestnet: Chain = {
   },
   testnet: true,
 };
+
+export const modeCustomTestnet: Chain = {
+  id: 44067,
+  name: "Mode Custom Testnet",
+  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  rpcUrls: {
+    default: { http: ["https://rpc-sandbox-t7eoil5hho.t.conduit.xyz"] },
+  },
+  blockExplorers: {
+    default: {
+      name: "Mode Custom Testnet Explorer",
+      url: "https://explorerl2new-sandbox-t7eoil5hho.t.conduit.xyz/",
+    },
+  },
+  testnet: true,
+};
