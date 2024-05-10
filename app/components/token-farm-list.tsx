@@ -74,13 +74,7 @@ export function TokenFarmList(props: { contracts: SiteConfigContracts }) {
     <EntityList
       entities={tokens}
       renderEntityCard={(token, index) => (
-        <TokenCard
-          key={index}
-          token={token}
-          contracts={props.contracts}
-          returnActionVisible={true}
-          addRecordActionVisible={true}
-        />
+        <TokenCard key={index} token={token} contracts={props.contracts} />
       )}
       noEntitiesText={`No tokens on ${props.contracts.chain.name} 😐`}
       className="gap-6"

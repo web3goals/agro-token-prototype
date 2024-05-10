@@ -14,8 +14,6 @@ import { Skeleton } from "./ui/skeleton";
 export function TokenCard(props: {
   token: string;
   contracts: SiteConfigContracts;
-  returnActionVisible?: boolean;
-  addRecordActionVisible?: boolean;
 }) {
   /**
    * Define token data
