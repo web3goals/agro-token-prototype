@@ -86,6 +86,7 @@ export function TokenCard(props: {
         tokenInvestmentToken={tokenParams.investmentToken}
         tokenInvestmentTokenSymbol={tokenInvestmentTokenSymbol}
         tokenInvestor={tokenParams.investor}
+        tokenReturnAmount={tokenParams.returnAmount.toString()}
         tokenReturnDate={tokenParams.returnDate.toString()}
         contracts={props.contracts}
         onUpdate={() => {

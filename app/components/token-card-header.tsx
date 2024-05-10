@@ -18,6 +18,7 @@ export function TokenCardHeader(props: {
   tokenInvestmentToken: `0x${string}`;
   tokenInvestmentTokenSymbol: string;
   tokenInvestor: `0x${string}`;
+  tokenReturnAmount: string;
   tokenReturnDate: string;
   contracts: SiteConfigContracts;
   onUpdate: () => void;
@@ -43,31 +44,31 @@ export function TokenCardHeader(props: {
         <Avatar className="size-14">
           <AvatarImage src="" alt="Icon" />
           <AvatarFallback className="text-2xl bg-primary">
-            {props.tokenMetadata?.category === "Cattle" ? "🐂" : "🪙"}
+            {props.tokenMetadata.category === "Cattle" ? "🐂" : "🪙"}
           </AvatarFallback>
         </Avatar>
       </div>
       {/* Content */}
       <div className="w-full flex flex-col gap-4">
-        <p className="text-xl font-bold">{props.tokenMetadata?.category}</p>
+        <p className="text-xl font-bold">{props.tokenMetadata.category}</p>
         <div className="flex flex-col gap-3">
           {/* Description */}
           <div className="flex flex-col gap-1 md:flex-row md:gap-3">
             <p className="text-sm text-muted-foreground">Description:</p>
-            <p className="text-sm">{props.tokenMetadata?.description}</p>
+            <p className="text-sm">{props.tokenMetadata.description}</p>
           </div>
           {/* Identifier */}
           <div className="flex flex-col gap-1 md:flex-row md:gap-3">
             <p className="text-sm text-muted-foreground">Identifier:</p>
             <p className="text-sm break-all">
-              {props.tokenMetadata?.identifier}
+              {props.tokenMetadata.identifier}
             </p>
           </div>
           {/* Created */}
           <div className="flex flex-col gap-1 md:flex-row md:gap-3">
             <p className="text-sm text-muted-foreground">Created:</p>
             <p className="text-sm break-all">
-              {new Date(props.tokenMetadata?.created || 0).toLocaleString()}
+              {new Date(props.tokenMetadata.created || 0).toLocaleString()}
             </p>
           </div>
           {/* Creator */}
@@ -103,7 +104,7 @@ export function TokenCardHeader(props: {
             <p className="text-sm text-muted-foreground">Expected return:</p>
             <p className="text-sm break-all">
               {formatEther(
-                BigInt(props.tokenMetadata?.expectedReturnAmount || 0)
+                BigInt(props.tokenMetadata.expectedReturnAmount || 0)
               )}{" "}
               {props.tokenInvestmentTokenSymbol}
             </p>
@@ -114,10 +115,10 @@ export function TokenCardHeader(props: {
               Expected return period:
             </p>
             <p className="text-sm break-all">
-              {props.tokenMetadata?.expectedReturnPeriod === "1m" && "1 month"}
-              {props.tokenMetadata?.expectedReturnPeriod === "2m" && "2 months"}
-              {props.tokenMetadata?.expectedReturnPeriod === "3m" && "3 months"}
-              {props.tokenMetadata?.expectedReturnPeriod === "4m" && "4 months"}
+              {props.tokenMetadata.expectedReturnPeriod === "1m" && "1 month"}
+              {props.tokenMetadata.expectedReturnPeriod === "2m" && "2 months"}
+              {props.tokenMetadata.expectedReturnPeriod === "3m" && "3 months"}
+              {props.tokenMetadata.expectedReturnPeriod === "4m" && "4 months"}
             </p>
           </div>
           {/* Investor */}
@@ -137,10 +138,32 @@ export function TokenCardHeader(props: {
               )}
             </p>
           </div>
+          {/* Return */}
+          {props.tokenReturnAmount !== "0" && (
+            <div className="flex flex-col md:flex-row md:gap-3">
+              <p className="text-sm text-muted-foreground">Return:</p>
+              <p className="text-sm break-all">
+                {formatEther(BigInt(props.tokenReturnAmount || "0"))}{" "}
+                {props.tokenInvestmentTokenSymbol}
+              </p>
+            </div>
+          )}
+          {/* Return date  */}
+          {props.tokenReturnDate !== "0" && (
+            <div className="flex flex-col md:flex-row md:gap-3">
+              <p className="text-sm text-muted-foreground">Return date:</p>
+              <p className="text-sm break-all">
+                {new Date(
+                  Number(props.tokenReturnDate) * 1000 || 0
+                ).toLocaleString()}
+              </p>
+            </div>
+          )}
         </div>
         {isReturnButtonVisible && (
           <TokenReturnInvestmentDialog
             token={props.token}
+            tokenInvestmentToken={props.tokenInvestmentToken}
             tokenInvestmentTokenSymbol={props.tokenInvestmentTokenSymbol}
             contracts={props.contracts}
             onReturn={() => props.onUpdate()}

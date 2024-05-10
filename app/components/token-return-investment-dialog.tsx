@@ -1,11 +1,13 @@
 "use client";
 
 import { SiteConfigContracts } from "@/config/site";
+import { agroTokenAbi } from "@/contracts/abi/agroToken";
 import useError from "@/hooks/useError";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { erc20Abi, parseEther } from "viem";
 import { useAccount, usePublicClient, useWalletClient } from "wagmi";
 import { z } from "zod";
 import { Button } from "./ui/button";
@@ -17,12 +19,20 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "./ui/form";
 import { Input } from "./ui/input";
 import { useToast } from "./ui/use-toast";
 
 export function TokenReturnInvestmentDialog(props: {
   token: string;
+  tokenInvestmentToken: `0x${string}`;
   tokenInvestmentTokenSymbol: string;
   contracts: SiteConfigContracts;
   onReturn?: () => void;
@@ -59,11 +69,37 @@ export function TokenReturnInvestmentDialog(props: {
         throw new Error("Wallet is not connected");
       }
 
-      // Send request to return investment
+      // Send request to approve transfer and return investment
       if (props.contracts.accountAbstractionSuported) {
         // TODO: Implement
       } else {
-        // TODO: Implement
+        const approveAmount = parseEther("1000000000");
+        const { request: approveRequest } = await publicClient.simulateContract(
+          {
+            address: props.tokenInvestmentToken,
+            abi: erc20Abi,
+            functionName: "approve",
+            args: [props.contracts.agroToken, approveAmount],
+            chain: props.contracts.chain,
+            account: address,
+          }
+        );
+        const approveTxHash = await walletClient.writeContract(approveRequest);
+        await publicClient.waitForTransactionReceipt({
+          hash: approveTxHash,
+        });
+        const { request: investRequest } = await publicClient.simulateContract({
+          address: props.contracts.agroToken,
+          abi: agroTokenAbi,
+          functionName: "returnInvestment",
+          args: [BigInt(props.token), parseEther(String(values.value))],
+          chain: props.contracts.chain,
+          account: address,
+        });
+        const investTxHash = await walletClient.writeContract(investRequest);
+        await publicClient.waitForTransactionReceipt({
+          hash: investTxHash as `0x${string}`,
+        });
       }
 
       // Show success message
@@ -101,9 +137,13 @@ export function TokenReturnInvestmentDialog(props: {
               name="value"
               render={({ field }) => (
                 <FormItem>
+                  <FormLabel>
+                    Number of {props.tokenInvestmentTokenSymbol} you want to
+                    return to the investor
+                  </FormLabel>
                   <FormControl>
                     <Input
-                      placeholder={`Number of ${props.tokenInvestmentTokenSymbol} you want to return...`}
+                      placeholder="5"
                       type="number"
                       disabled={isFormSubmitting}
                       {...field}
