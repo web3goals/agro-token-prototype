@@ -67,22 +67,6 @@ export function TokenCreateForm() {
     },
   });
 
-  // TODO: Delete next code
-  // const form = useForm<z.infer<typeof formSchema>>({
-  //   resolver: zodResolver(formSchema),
-  //   defaultValues: {
-  //     category: "Cattle",
-  //     description:
-  //       "An Aberdeen Angus calf from a farm located in Spain, Province of Cáceres",
-  //     identifier: "4219",
-  //     chain: siteConfig.contracts.raspberryTestnet.chain.id.toString(),
-  //     investmentToken: siteConfig.contracts.raspberryTestnet.usdToken,
-  //     investmentAmount: 4200,
-  //     expectedReturnAmount: 5900,
-  //     expectedReturnPeriod: "3m",
-  //   },
-  // });
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       setIsFormSubmitting(true);
@@ -270,7 +254,7 @@ export function TokenCreateForm() {
               <FormLabel>Required investment amount</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="5"
+                  placeholder="320"
                   type="number"
                   disabled={isFormSubmitting}
                   {...field}
@@ -288,7 +272,7 @@ export function TokenCreateForm() {
               <FormLabel>Expected return amount</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="5"
+                  placeholder="480"
                   type="number"
                   disabled={isFormSubmitting}
                   {...field}

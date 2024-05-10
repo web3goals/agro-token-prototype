@@ -36,7 +36,7 @@ export function TokenCardRecords(props: {
       <div className="w-full flex flex-col gap-4">
         <p className="text-lg font-bold">Records</p>
         <EntityList
-          entities={props.tokenMetadata?.records}
+          entities={props.tokenMetadata.records || []}
           renderEntityCard={(record, index) => (
             <TokenCardRecord
               key={index}
@@ -72,13 +72,17 @@ function TokenCardRecord(props: {
       <p className="text-sm text-muted-foreground">
         {new Date(props.record.date).toLocaleString()} —
       </p>
-      <p className="text-sm">{props.record.value}</p>
-      {props.tokenMetadata?.category === "Cattle" && (
-        <p className="text-sm">
-          kg (~{Number(props.record.value) * TOKENS_PER_CATTLE_KG}{" "}
-          {props.tokenInvestmentTokenSymbol || "tokens"})
-        </p>
-      )}
+      <p className="text-sm">
+        {props.record.value}{" "}
+        {props.tokenMetadata?.category === "Cattle" ? (
+          <>
+            kg (~{Number(props.record.value) * TOKENS_PER_CATTLE_KG}{" "}
+            {props.tokenInvestmentTokenSymbol || "tokens"})
+          </>
+        ) : (
+          <>points</>
+        )}
+      </p>
     </div>
   );
 }
