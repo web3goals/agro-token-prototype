@@ -40,7 +40,7 @@ export function TokenReturnInvestmentDialog(props: {
   const { handleError } = useError();
   const publicClient = usePublicClient();
   const { data: walletClient } = useWalletClient();
-  const { address } = useAccount();
+  const { address, chainId } = useAccount();
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
@@ -67,6 +67,10 @@ export function TokenReturnInvestmentDialog(props: {
       // Check wallet
       if (!address || !walletClient) {
         throw new Error("Wallet is not connected");
+      }
+      // Check chain
+      if (chainId !== props.contracts.chain.id) {
+        throw new Error(`You need to connect to ${props.contracts.chain.name}`);
       }
 
       // Send request to approve transfer and return investment

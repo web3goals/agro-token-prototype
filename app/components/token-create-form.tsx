@@ -38,7 +38,7 @@ export function TokenCreateForm() {
   const { handleError } = useError();
   const publicClient = usePublicClient();
   const { data: walletClient } = useWalletClient();
-  const { address } = useAccount();
+  const { address, chainId } = useAccount();
   const router = useRouter();
   const [isFormSubmitting, setIsFormSubmitting] = useState(false);
 
@@ -71,6 +71,9 @@ export function TokenCreateForm() {
     try {
       setIsFormSubmitting(true);
 
+      // Define contracts
+      const contracts = chainToSiteConfigContracts(values.chain);
+
       // Check public client
       if (!publicClient) {
         throw new Error("Public client is not ready");
@@ -79,8 +82,10 @@ export function TokenCreateForm() {
       if (!address || !walletClient) {
         throw new Error("Wallet is not connected");
       }
-      // Define contracts
-      const contracts = chainToSiteConfigContracts(values.chain);
+      // Check chain
+      if (chainId !== contracts.chain.id) {
+        throw new Error(`You need to connect to ${contracts.chain.name}`);
+      }
 
       // Parse values
       let investmentToken;
