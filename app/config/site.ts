@@ -32,15 +32,5 @@ export const siteConfig = {
         "0x0000000000000000000000000000000000000000" as `0x${string}`,
       accountAbstractionSuported: false,
     } as SiteConfigContracts,
-    modeTestnet: {
-      chain: modeTestnet,
-      agroToken: "0x4F316c6536Ce3ee94De802a9EfDb20484Ec4BDF9" as `0x${string}`,
-      usdToken: "0xC3d9DcfD747795c7F6590B51b44478a0EE7d02F1" as `0x${string}`,
-      entryPoint: "0x0000000000000000000000000000000000000000" as `0x${string}`,
-      paymaster: "0x0000000000000000000000000000000000000000" as `0x${string}`,
-      accountFactory:
-        "0x0000000000000000000000000000000000000000" as `0x${string}`,
-      accountAbstractionSuported: false,
-    } as SiteConfigContracts,
   },
 };
