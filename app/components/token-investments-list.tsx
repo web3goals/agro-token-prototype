@@ -57,7 +57,6 @@ export function TokenInvestmentsList(props: {
     if (address && data && smartAccountAddress) {
       const tokens: string[] = [];
       const dataFirstPage = (data as any).pages[0];
-      console.log({ dataFirstPage });
       for (let i = 0; i < dataFirstPage.length; i++) {
         const dataPageElement = dataFirstPage[i];
         if (
