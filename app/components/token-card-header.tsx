@@ -5,9 +5,10 @@ import { addressToShortAddress } from "@/lib/converters";
 import { AgroTokenMetadata } from "@/types/agro-token-metadata";
 import { formatEther, isAddressEqual, zeroAddress } from "viem";
 import { useAccount } from "wagmi";
-import { TokenReturnInvestmentDialog } from "./token-return-investment-dialog";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { TokenInvestDialog } from "./token-invest-dialog";
+import { TokenReturnInvestmentDialog } from "./token-return-investment-dialog";
+import { TokenSellDialog } from "./token-sell-dialog";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 export function TokenCardHeader(props: {
   token: string;
@@ -30,6 +31,10 @@ export function TokenCardHeader(props: {
   const isInvestButtonVisible =
     isAddressEqual(props.tokenInvestor, zeroAddress) &&
     !isAddressEqual(props.tokenOwner, address || zeroAddress);
+
+  const isSellButtonVisible =
+    props.tokenReturnDate === "0" &&
+    isAddressEqual(props.tokenInvestor, address || zeroAddress);
 
   return (
     <div className="w-full flex flex-row gap-4">
@@ -151,6 +156,7 @@ export function TokenCardHeader(props: {
             onInvest={() => props.onUpdate()}
           />
         )}
+        {isSellButtonVisible && <TokenSellDialog />}
       </div>
     </div>
   );
